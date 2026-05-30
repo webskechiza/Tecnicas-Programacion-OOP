@@ -1,3 +1,5 @@
+package Taller_Semana1_2;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

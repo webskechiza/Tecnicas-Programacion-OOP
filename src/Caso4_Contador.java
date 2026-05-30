@@ -1,3 +1,5 @@
+package Taller_Semana1_2;
+
 public class Caso4_Contador {
 
     // Variable estática: compartida entre todos los objetos

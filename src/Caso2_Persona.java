@@ -1,3 +1,5 @@
+package Taller_Semana1_2;
+
 public class Caso2_Persona {
     // Atributos
     String nombre;
