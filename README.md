@@ -1,6 +1,6 @@
 # Técnicas de Programación — Orientación a Objetos
 
-Repositorio del curso **Técnicas de Programación OOP** — UPN Kevin Chiri
+Repositorio del curso **Técnicas de Programación OOP** — UPN Kevin Oswaldo Chirinos Zapata - N00521954 - Grupo 28
 
 ## Estructura
 
