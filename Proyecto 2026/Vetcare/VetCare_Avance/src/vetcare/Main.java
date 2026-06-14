@@ -1,3 +1,5 @@
+package vetcare;
+
 import vetcare.gestion.GestorMascotas;
 import vetcare.modelo.*;
 
@@ -19,7 +21,6 @@ public class Main {
         System.out.println("║   VetCare — Módulo de Mascotas v0.1  ║");
         System.out.println("╚══════════════════════════════════════╝");
 
-        // Datos de prueba para demostrar herencia y polimorfismo
         cargarDatosDemo();
 
         int opcion;
