@@ -4,7 +4,7 @@ import vetcare.modelo.Mascota;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestorMascotas {
+public class GestorMascotas implements IGestionable<Mascota> {
     private ArrayList<Mascota> mascotas;
     private int                siguienteId;
 
@@ -16,6 +16,16 @@ public class GestorMascotas {
     public void agregar(Mascota m) {
         mascotas.add(m);
         siguienteId++;
+    }
+
+    @Override
+    public void registrar(Mascota m) { agregar(m); }
+
+    @Override
+    public Mascota buscar(int id) {
+        for (Mascota m : mascotas)
+            if (m.getId() == id) return m;
+        return null;
     }
 
     public int getSiguienteId() { return siguienteId; }
