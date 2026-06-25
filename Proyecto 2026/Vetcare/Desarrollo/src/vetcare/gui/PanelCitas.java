@@ -18,7 +18,7 @@ public class PanelCitas extends JPanel {
     private JTable            tabla;
 
     private static final String[] COLUMNAS =
-        {"ID", "Mascota", "Veterinario", "Fecha", "Hora", "Motivo", "Estado", "Cancelacion"};
+        {"ID", "Mascota", "Veterinario", "Fecha", "Hora", "Motivo", "Estado", "Cancelación"};
 
     public PanelCitas() {
         setLayout(new BorderLayout());
@@ -46,7 +46,7 @@ public class PanelCitas extends JPanel {
         barraBot.setBackground(MainFrame.VERDE_CLAR);
         JButton btnNuevo    = boton("+ Agendar cita",        MainFrame.VERDE);
         JButton btnAtend    = boton("Marcar Atendida",        MainFrame.VERDE_MED);
-        JButton btnNoAsis   = boton("Marcar No asistio",      MainFrame.AMBAR);
+        JButton btnNoAsis   = boton("Marcar No asistió",      MainFrame.AMBAR);
         JButton btnCancelar = boton("Cancelar cita",          new Color(0xC0, 0x39, 0x2B));
         JButton btnRef      = boton("Actualizar tabla",        new Color(0x2C, 0x3E, 0x50));
 
@@ -152,7 +152,7 @@ public class PanelCitas extends JPanel {
     private void cancelar() {
         int fila = tabla.getSelectedRow();
         if (fila < 0) { JOptionPane.showMessageDialog(this, "Selecciona una cita."); return; }
-        String motivo = JOptionPane.showInputDialog(this, "Motivo de cancelacion:");
+        String motivo = JOptionPane.showInputDialog(this, "Motivo de cancelación:");
         if (motivo == null) return;
         actualizarEstado("CANCELADA", motivo);
     }

@@ -21,7 +21,7 @@ public class LoginFrame extends JFrame {
     private JLabel         lblMensaje;
 
     public LoginFrame() {
-        setTitle("VetCare — Inicio de sesion");
+        setTitle("VetCare — Inicio de sesión");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setSize(420, 380);
@@ -40,7 +40,7 @@ public class LoginFrame extends JFrame {
         JLabel titulo = new JLabel("VETCARE", SwingConstants.CENTER);
         titulo.setFont(new Font("Calibri", Font.BOLD, 30));
         titulo.setForeground(Color.WHITE);
-        JLabel subtitulo = new JLabel("Sistema de Gestion de Clinica Veterinaria", SwingConstants.CENTER);
+        JLabel subtitulo = new JLabel("Sistema de Gestión de Clínica Veterinaria", SwingConstants.CENTER);
         subtitulo.setFont(new Font("Calibri", Font.PLAIN, 12));
         subtitulo.setForeground(new Color(0xD5, 0xF5, 0xE3));
         JPanel headerTextos = new JPanel(new GridLayout(2, 1, 0, 4));
@@ -66,7 +66,7 @@ public class LoginFrame extends JFrame {
             BorderFactory.createLineBorder(VERDE, 1),
             BorderFactory.createEmptyBorder(4, 8, 4, 8)));
 
-        JLabel lblC = new JLabel("Contrasena:");
+        JLabel lblC = new JLabel("Contraseña:");
         lblC.setFont(new Font("Calibri", Font.BOLD, 13));
         lblC.setForeground(VERDE);
         txtClave = new JPasswordField();
@@ -101,7 +101,7 @@ public class LoginFrame extends JFrame {
         // Footer
         JPanel footer = new JPanel();
         footer.setBackground(AMBAR);
-        JLabel pie = new JLabel("UPN 2026 — Tecnicas de Programacion OO");
+        JLabel pie = new JLabel("UPN 2026 — Técnicas de Programación OO");
         pie.setForeground(Color.WHITE);
         pie.setFont(new Font("Calibri", Font.PLAIN, 11));
         footer.add(pie);
@@ -130,17 +130,17 @@ public class LoginFrame extends JFrame {
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this,
                     "No se pudo conectar a MySQL.\n" +
-                    "Verifica que MySQL este corriendo y que la base de datos\n" +
+                    "Verifica que MySQL esté corriendo y que la base de datos\n" +
                     "'vetcare_db' exista (ejecuta vetcare_db.sql).\n\n" +
                     "Error: " + ex.getMessage(),
-                    "Error de conexion", JOptionPane.ERROR_MESSAGE);
+                    "Error de conexión", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             intentos--;
             if (intentos > 0) {
                 lblMensaje.setText("Credenciales incorrectas. Intentos restantes: " + intentos);
             } else {
-                lblMensaje.setText("Acceso bloqueado. Reinicia la aplicacion.");
+                lblMensaje.setText("Acceso bloqueado. Reinicia la aplicación.");
                 txtUsuario.setEnabled(false);
                 txtClave.setEnabled(false);
             }

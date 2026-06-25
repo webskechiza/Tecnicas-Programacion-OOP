@@ -15,7 +15,7 @@ public class PanelVeterinarios extends JPanel {
     private JTable            tabla;
 
     private static final String[] COLUMNAS =
-        {"ID", "Nombre", "DNI", "Especialidad", "Colegiatura", "Telefono", "Activo"};
+        {"ID", "Nombre", "DNI", "Especialidad", "Colegiatura", "Teléfono", "Activo"};
 
     public PanelVeterinarios() {
         setLayout(new BorderLayout());
@@ -43,8 +43,8 @@ public class PanelVeterinarios extends JPanel {
         JPanel barraBot = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 8));
         barraBot.setBackground(MainFrame.VERDE_CLAR);
         JButton btnNuevo     = boton("+ Registrar veterinario", MainFrame.VERDE);
-        JButton btnDesact    = boton("Desactivar seleccion",     MainFrame.AMBAR);
-        JButton btnEliminar  = boton("Eliminar seleccion",       new Color(0xC0, 0x39, 0x2B));
+        JButton btnDesact    = boton("Desactivar selección",     MainFrame.AMBAR);
+        JButton btnEliminar  = boton("Eliminar selección",       new Color(0xC0, 0x39, 0x2B));
         JButton btnActualizar = boton("Actualizar tabla",         MainFrame.VERDE_MED);
         btnNuevo.addActionListener(e    -> abrirFormulario());
         btnDesact.addActionListener(e   -> desactivar());
@@ -81,8 +81,8 @@ public class PanelVeterinarios extends JPanel {
 
         Object[] campos = {
             "Nombre:", fNombre, "DNI:", fDni,
-            "Telefono:", fTel, "Correo:", fCorreo,
-            "Especialidad:", fEsp, "N. colegiatura:", fCol
+            "Teléfono:", fTel, "Correo:", fCorreo,
+            "Especialidad:", fEsp, "N.° colegiatura:", fCol
         };
         int r = JOptionPane.showConfirmDialog(this, campos, "Registrar Veterinario",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);

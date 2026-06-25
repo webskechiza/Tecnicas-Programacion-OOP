@@ -20,7 +20,7 @@ public class PanelHistorial extends JPanel {
     private List<Mascota>     mascotas;
 
     private static final String[] COLUMNAS =
-        {"ID", "Fecha", "Diagnostico", "Tratamiento", "Observaciones"};
+        {"ID", "Fecha", "Diagnóstico", "Tratamiento", "Observaciones"};
 
     public PanelHistorial() {
         setLayout(new BorderLayout());
@@ -66,7 +66,7 @@ public class PanelHistorial extends JPanel {
         JPanel barraBot = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 8));
         barraBot.setBackground(MainFrame.VERDE_CLAR);
         JButton btnNueva = boton("+ Registrar consulta",  MainFrame.VERDE);
-        JButton btnElim  = boton("Eliminar seleccion",     new Color(0xC0, 0x39, 0x2B));
+        JButton btnElim  = boton("Eliminar selección",     new Color(0xC0, 0x39, 0x2B));
         btnNueva.addActionListener(e -> registrarConsulta());
         btnElim.addActionListener(e  -> eliminarConsulta());
         barraBot.add(btnNueva); barraBot.add(btnElim);
@@ -118,17 +118,17 @@ public class PanelHistorial extends JPanel {
 
         Object[] campos = {
             "Fecha (yyyy-MM-dd):", fFecha,
-            "Diagnostico:",        fDiag,
+            "Diagnóstico:",        fDiag,
             "Tratamiento:",        fTrat,
             "Observaciones:",      fObs
         };
-        int r = JOptionPane.showConfirmDialog(this, campos, "Registrar Consulta Medica",
+        int r = JOptionPane.showConfirmDialog(this, campos, "Registrar Consulta Médica",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (r != JOptionPane.OK_OPTION) return;
 
         String diag = fDiag.getText().trim();
         if (diag.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El diagnostico es obligatorio.");
+            JOptionPane.showMessageDialog(this, "El diagnóstico es obligatorio.");
             return;
         }
         try {

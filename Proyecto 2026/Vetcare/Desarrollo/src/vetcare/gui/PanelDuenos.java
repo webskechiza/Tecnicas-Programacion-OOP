@@ -16,7 +16,7 @@ public class PanelDuenos extends JPanel {
     private JTable            tabla;
     private JTextField        txtBuscar;
 
-    private static final String[] COLUMNAS = {"ID", "Nombre", "DNI", "Telefono", "Correo", "Direccion"};
+    private static final String[] COLUMNAS = {"ID", "Nombre", "DNI", "Teléfono", "Correo", "Dirección"};
 
     public PanelDuenos() {
         setLayout(new BorderLayout(0, 0));
@@ -60,8 +60,8 @@ public class PanelDuenos extends JPanel {
         // Botones inferiores
         JPanel barraBot = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 8));
         barraBot.setBackground(MainFrame.VERDE_CLAR);
-        JButton btnNuevo    = boton("+ Registrar dueno",  MainFrame.VERDE);
-        JButton btnEliminar = boton("Eliminar seleccion", new Color(0xC0, 0x39, 0x2B));
+        JButton btnNuevo    = boton("+ Registrar dueño",   MainFrame.VERDE);
+        JButton btnEliminar = boton("Eliminar selección",  new Color(0xC0, 0x39, 0x2B));
         btnNuevo.addActionListener(e -> abrirFormulario());
         btnEliminar.addActionListener(e -> eliminar());
         barraBot.add(btnNuevo); barraBot.add(btnEliminar);
@@ -81,7 +81,7 @@ public class PanelDuenos extends JPanel {
                     d.getTelefono(), d.getCorreo(), d.getDireccion()
                 });
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al cargar duenos: " + ex.getMessage(),
+            JOptionPane.showMessageDialog(this, "Error al cargar dueños: " + ex.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -114,11 +114,11 @@ public class PanelDuenos extends JPanel {
         Object[] campos = {
             "Nombre completo:", fNombre,
             "DNI:",             fDni,
-            "Telefono:",        fTelefono,
+            "Teléfono:",        fTelefono,
             "Correo:",          fCorreo,
-            "Direccion:",       fDir
+            "Dirección:",       fDir
         };
-        int r = JOptionPane.showConfirmDialog(this, campos, "Registrar Dueno",
+        int r = JOptionPane.showConfirmDialog(this, campos, "Registrar Dueño",
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (r != JOptionPane.OK_OPTION) return;
@@ -131,14 +131,14 @@ public class PanelDuenos extends JPanel {
         }
         try {
             if (DuenoDB.existeDni(dni)) {
-                JOptionPane.showMessageDialog(this, "Ya existe un dueno con ese DNI.");
+                JOptionPane.showMessageDialog(this, "Ya existe un dueño con ese DNI.");
                 return;
             }
             Dueno d = new Dueno(0, nombre, dni,
                 fTelefono.getText().trim(), fCorreo.getText().trim(), fDir.getText().trim());
             DuenoDB.insertar(d);
             cargarTabla();
-            JOptionPane.showMessageDialog(this, "Dueno registrado correctamente.");
+            JOptionPane.showMessageDialog(this, "Dueño registrado correctamente.");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
@@ -147,7 +147,7 @@ public class PanelDuenos extends JPanel {
 
     private void eliminar() {
         int fila = tabla.getSelectedRow();
-        if (fila < 0) { JOptionPane.showMessageDialog(this, "Selecciona un dueno."); return; }
+        if (fila < 0) { JOptionPane.showMessageDialog(this, "Selecciona un dueño."); return; }
         int id     = (int) modelo.getValueAt(fila, 0);
         String nom = (String) modelo.getValueAt(fila, 1);
         int conf = JOptionPane.showConfirmDialog(this,

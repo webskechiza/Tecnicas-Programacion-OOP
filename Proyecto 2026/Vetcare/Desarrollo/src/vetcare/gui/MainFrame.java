@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
     static final Color VERDE_CLAR = new Color(0xEA, 0xFA, 0xF1);
 
     public MainFrame() {
-        setTitle("VetCare — Sistema de Gestion de Clinica Veterinaria");
+        setTitle("VetCare — Sistema de Gestión de Clínica Veterinaria");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(1050, 680);
         setLocationRelativeTo(null);
@@ -47,7 +47,7 @@ public class MainFrame extends JFrame {
         JLabel lblTitulo = new JLabel("  VETCARE", SwingConstants.LEFT);
         lblTitulo.setFont(new Font("Calibri", Font.BOLD, 22));
         lblTitulo.setForeground(Color.WHITE);
-        JLabel lblSub = new JLabel("Sistema de Gestion de Clinica Veterinaria  |  UPN 2026", SwingConstants.RIGHT);
+        JLabel lblSub = new JLabel("Sistema de Gestión de Clínica Veterinaria  |  UPN 2026", SwingConstants.RIGHT);
         lblSub.setFont(new Font("Calibri", Font.PLAIN, 12));
         lblSub.setForeground(new Color(0xD5, 0xF5, 0xE3));
         header.add(lblTitulo, BorderLayout.WEST);
@@ -58,7 +58,7 @@ public class MainFrame extends JFrame {
         tabs.setFont(new Font("Calibri", Font.BOLD, 13));
         tabs.setBackground(FONDO);
         tabs.addTab("Mascotas",      new PanelMascotas());
-        tabs.addTab("Duenos",        new PanelDuenos());
+        tabs.addTab("Dueños",        new PanelDuenos());
         tabs.addTab("Veterinarios",  new PanelVeterinarios());
         tabs.addTab("Citas",         new PanelCitas());
         tabs.addTab("Historial",     new PanelHistorial());

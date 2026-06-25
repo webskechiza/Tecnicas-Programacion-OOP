@@ -17,7 +17,7 @@ public class PanelMascotas extends JPanel {
     private JTextField        txtBuscar;
 
     private static final String[] COLUMNAS =
-        {"ID", "Especie", "Nombre", "Raza", "Edad", "Sexo", "Peso(kg)", "Dueno", "Observaciones"};
+        {"ID", "Especie", "Nombre", "Raza", "Edad", "Sexo", "Peso(kg)", "Dueño", "Observaciones"};
 
     public PanelMascotas() {
         setLayout(new BorderLayout());
@@ -56,7 +56,7 @@ public class PanelMascotas extends JPanel {
         JPanel barraBot = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 8));
         barraBot.setBackground(MainFrame.VERDE_CLAR);
         JButton btnNuevo   = boton("+ Registrar mascota",  MainFrame.VERDE);
-        JButton btnElim    = boton("Eliminar seleccion",    new Color(0xC0, 0x39, 0x2B));
+        JButton btnElim    = boton("Eliminar selección",    new Color(0xC0, 0x39, 0x2B));
         btnNuevo.addActionListener(e -> abrirFormulario());
         btnElim.addActionListener(e  -> eliminar());
         barraBot.add(btnNuevo); barraBot.add(btnElim);
@@ -114,12 +114,12 @@ public class PanelMascotas extends JPanel {
         JTextField fPeso    = new JTextField(8);
         JTextField fDniDueno = new JTextField(20);
         JTextField fObs     = new JTextField(20);
-        JLabel     lblExtra = new JLabel("Tamano (Pequeno/Mediano/Grande):");
+        JLabel     lblExtra = new JLabel("Tamaño (Pequeño/Mediano/Grande):");
         JTextField fExtra   = new JTextField(20);
 
         cbEspecie.addActionListener(e -> {
             String esp = (String) cbEspecie.getSelectedItem();
-            if ("Perro".equals(esp))     lblExtra.setText("Tamano (Pequeno/Mediano/Grande):");
+            if ("Perro".equals(esp))     lblExtra.setText("Tamaño (Pequeño/Mediano/Grande):");
             else if ("Gato".equals(esp)) lblExtra.setText("Castrado? (true/false):");
             else                          lblExtra.setText("Tipo de pico (Curvo/Recto/Ganchudo):");
         });
@@ -137,9 +137,9 @@ public class PanelMascotas extends JPanel {
         Object[] campos = {
             "Especie:", cbEspecie,
             "Nombre:", fNombre, "Raza:", fRaza,
-            "Edad (anos):", fEdad, "Sexo:", cbSexo,
+            "Edad (años):", fEdad, "Sexo:", cbSexo,
             "Peso (kg):", fPeso,
-            "DNI del dueno:", fDniDueno,
+            "DNI del dueño:", fDniDueno,
             "Observaciones:", fObs,
             lblExtra, fExtra
         };
@@ -151,12 +151,12 @@ public class PanelMascotas extends JPanel {
         String nombre  = fNombre.getText().trim();
         String dniDueno = fDniDueno.getText().trim();
         if (nombre.isEmpty() || dniDueno.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nombre y DNI del dueno son obligatorios.");
+            JOptionPane.showMessageDialog(this, "Nombre y DNI del dueño son obligatorios.");
             return;
         }
         try {
             if (DuenoDB.buscarPorDni(dniDueno) == null) {
-                JOptionPane.showMessageDialog(this, "No existe un dueno con ese DNI. Registrelo primero.");
+                JOptionPane.showMessageDialog(this, "No existe un dueño con ese DNI. Regístrelo primero.");
                 return;
             }
             int    edad  = Integer.parseInt(fEdad.getText().trim().isEmpty() ? "0" : fEdad.getText().trim());
@@ -167,7 +167,7 @@ public class PanelMascotas extends JPanel {
             cargarTabla();
             JOptionPane.showMessageDialog(this, "Mascota registrada correctamente.");
         } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(this, "Edad y peso deben ser numeros validos.");
+            JOptionPane.showMessageDialog(this, "Edad y peso deben ser números válidos.");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
