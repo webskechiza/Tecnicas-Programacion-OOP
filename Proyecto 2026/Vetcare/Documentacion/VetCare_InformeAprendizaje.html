@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VetCare — Informe de Aprendizaje POO</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Calibri', 'Segoe UI', sans-serif; background: #F4F6F7; color: #1A1A1A; font-size: 14px; line-height: 1.6; }
+
+    /* ── HEADER ── */
+    .header { background: #145A32; color: white; padding: 28px 40px; }
+    .header h1 { font-size: 28px; letter-spacing: 2px; }
+    .header h2 { font-size: 15px; font-weight: normal; margin-top: 4px; color: #D5F5E3; }
+    .header .meta { margin-top: 14px; display: flex; gap: 40px; font-size: 13px; color: #A9DFBF; }
+    .header .meta span strong { color: white; }
+
+    /* ── RESUMEN RÁPIDO ── */
+    .resumen { background: #1E8B4F; color: white; padding: 16px 40px; display: flex; gap: 40px; flex-wrap: wrap; }
+    .resumen .item { font-size: 13px; }
+    .resumen .item span { font-size: 20px; font-weight: bold; display: block; }
+
+    /* ── CONTENIDO ── */
+    .content { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+
+    /* ── SECCIÓN ── */
+    .section { margin-bottom: 36px; }
+    .section-title { background: #145A32; color: white; padding: 10px 18px; font-size: 16px; font-weight: bold; border-radius: 4px 4px 0 0; }
+    .section-body { background: white; border: 1px solid #D5D8DC; border-top: none; padding: 20px 22px; border-radius: 0 0 4px 4px; }
+
+    /* ── UNIDAD BADGE ── */
+    .unidad-badge { display: inline-block; background: #D5F5E3; color: #145A32; border: 1px solid #A9DFBF; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-bottom: 8px; }
+    .semana-badge { display: inline-block; background: #FEF9E7; color: #B7770D; border: 1px solid #F9E79F; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-left: 6px; }
+
+    /* ── MÓDULO CARD ── */
+    .modulo-card { border: 1px solid #D5D8DC; border-left: 4px solid #145A32; border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
+    .modulo-header { background: #EAFAF1; padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
+    .modulo-header h3 { font-size: 15px; color: #145A32; }
+    .modulo-header .archivo { font-size: 12px; color: #555; font-family: monospace; background: #D5F5E3; padding: 2px 8px; border-radius: 3px; }
+    .modulo-body { padding: 14px 16px; }
+
+    /* ── CODE BLOCK ── */
+    pre { background: #1E2022; color: #E8F8F5; font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; padding: 14px 16px; border-radius: 4px; overflow-x: auto; margin: 10px 0; line-height: 1.5; }
+    .kw { color: #82E0AA; }   /* keywords */
+    .cm { color: #85C1E9; }   /* class names */
+    .st { color: #F9E79F; }   /* strings */
+    .co { color: #888; }       /* comments */
+    .an { color: #F0B27A; }   /* annotations */
+
+    /* ── CONCEPTO TABLE ── */
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+    th { background: #145A32; color: white; padding: 8px 12px; text-align: left; }
+    td { padding: 7px 12px; border-bottom: 1px solid #E8ECEF; vertical-align: top; }
+    tr:nth-child(even) td { background: #F0FBF5; }
+
+    /* ── SCREENSHOT PLACEHOLDER ── */
+    .screenshot-box { border: 2px dashed #A9DFBF; background: #F0FBF5; border-radius: 6px; padding: 20px; text-align: center; color: #145A32; font-size: 13px; margin: 12px 0; min-height: 80px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; }
+    .screenshot-box img { max-width: 100%; border: 1px solid #C0C0C0; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+
+    /* ── RELACIÓN SILABO ── */
+    .silabo-ref { background: #FEF9E7; border-left: 3px solid #F39C12; padding: 8px 14px; font-size: 13px; margin-top: 10px; border-radius: 0 4px 4px 0; }
+    .silabo-ref strong { color: #B7770D; }
+
+    /* ── DIAGRAMA ── */
+    .diagrama { font-family: monospace; font-size: 12px; background: #1E2022; color: #D5F5E3; padding: 16px; border-radius: 4px; overflow-x: auto; line-height: 1.8; }
+    .diagrama .arrow { color: #F9E79F; }
+    .diagrama .cls { color: #82E0AA; }
+    .diagrama .iface { color: #85C1E9; }
+
+    /* ── FOOTER ── */
+    .footer { background: #B77A0C; color: white; text-align: center; padding: 12px; font-size: 12px; margin-top: 30px; }
+
+    /* ── UTILS ── */
+    .chip-verde { background: #D5F5E3; color: #145A32; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; }
+    .chip-azul  { background: #D6EAF8; color: #1A5276; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; }
+    .chip-ambar { background: #FEF9E7; color: #B7770D; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; }
+    p { margin: 6px 0; }
+    ul { margin: 6px 0 6px 18px; }
+    li { margin-bottom: 3px; }
+    hr { border: none; border-top: 1px solid #E8ECEF; margin: 16px 0; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ HEADER -->
+<div class="header">
+  <h1>VETCARE — INFORME DE APRENDIZAJE</h1>
+  <h2>Sistema de Gestión de Clínica Veterinaria · Técnicas de Programación OO</h2>
+  <div class="meta">
+    <span><strong>Estudiante:</strong> Kevin Chirinos Zapata</span>
+    <span><strong>Código:</strong> N00521954 · Grupo 28</span>
+    <span><strong>Docente:</strong> Martín Eduardo Torres Rodríguez</span>
+    <span><strong>Ciclo:</strong> 2026-4</span>
+    <span><strong>Fecha:</strong> 24/06/2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ RESUMEN -->
+<div class="resumen">
+  <div class="item"><span>4</span>Paquetes Java</div>
+  <div class="item"><span>21</span>Clases / Interfaces</div>
+  <div class="item"><span>6</span>Clases DB (JDBC)</div>
+  <div class="item"><span>7</span>Pantallas Swing</div>
+  <div class="item"><span>5</span>Tablas MySQL</div>
+  <div class="item"><span>40+</span>Req. Funcionales</div>
+  <div class="item"><span>3</span>Unidades del Sílabo</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ CONTENIDO -->
+<div class="content">
+
+  <!-- ── INTRODUCCIÓN ── -->
+  <div class="section">
+    <div class="section-title">1. ¿Qué es VetCare?</div>
+    <div class="section-body">
+      <p>VetCare es un sistema de escritorio desarrollado en Java que permite gestionar una clínica veterinaria: registrar dueños y mascotas, agendar citas con veterinarios y llevar el historial médico de cada animal. El proyecto integra <strong>los tres módulos del sílabo</strong>: fundamentos POO, relaciones entre clases y programación visual con base de datos.</p>
+
+      <div class="diagrama" style="margin-top:14px;">
+<span class="cls">vetcare/</span>
+├── <span class="cls">modelo/</span>         → Clases de dominio (Unidad I y II)
+│   ├── Animal.java       <span class="arrow">← clase abstracta</span>
+│   ├── Perro / Gato / Ave.java  <span class="arrow">← herencia + polimorfismo</span>
+│   ├── Persona.java      <span class="arrow">← superclase abstracta</span>
+│   ├── Dueno / Veterinario.java <span class="arrow">← herencia</span>
+│   ├── Mascota.java      <span class="arrow">← composición</span>
+│   ├── Cita.java         <span class="arrow">← enum Estado</span>
+│   └── ConsultaMedica.java <span class="arrow">← sobrecarga</span>
+├── <span class="iface">IGestionable.java</span>   → interfaz genérica (Unidad II)
+├── <span class="cls">gestion/</span>
+│   └── SistemaVetCare.java <span class="arrow">← static final, colecciones</span>
+├── <span class="cls">db/</span>             → Acceso a BD (Unidad III)
+│   ├── ConexionDB.java   <span class="arrow">← Singleton + JDBC</span>
+│   └── DuenoDB / VeterinarioDB / MascotaDB / CitaDB / ConsultaDB.java
+└── <span class="cls">gui/</span>            → Interfaz gráfica Swing (Unidad III)
+    ├── LoginFrame / MainFrame / MainGUI.java
+    └── PanelDuenos / Veterinarios / Mascotas / Citas / Historial.java
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       UNIDAD I
+  ══════════════════════════════════════════════════════════ -->
+  <div class="section-title" style="border-radius:4px; margin-bottom:4px; font-size:18px; padding:12px 18px;">
+    📘 UNIDAD I — Fundamentos de Programación Orientada a Objetos
+    <span style="font-size:13px; font-weight:normal;"> (Semanas 1 – 3)</span>
+  </div>
+  <div style="background:#EAFAF1; border:1px solid #A9DFBF; padding:10px 18px; margin-bottom:20px; border-radius:0 0 4px 4px; font-size:13px;">
+    <strong>Logro:</strong> Desarrollar casos aplicando correctamente los principios de POO, con buenas prácticas y control de versiones.
+  </div>
+
+  <!-- 1.1 Clases y objetos -->
+  <div class="modulo-card">
+    <div class="modulo-header">
+      <h3>1.1 Clases, Objetos y Modificadores de Acceso</h3>
+      <span class="archivo">modelo/Dueno.java · modelo/Veterinario.java</span>
+      <span class="unidad-badge">Semana 1</span>
+    </div>
+    <div class="modulo-body">
+      <p>Cada entidad del mundo real (dueño, veterinario, mascota) se modela como una <strong>clase</strong>. Los atributos son <code>private</code> y el acceso se hace exclusivamente mediante <strong>getters y setters</strong>, aplicando el principio de encapsulamiento.</p>
+
+      <pre><span class="kw">public class</span> <span class="cm">Dueno</span> <span class="kw">extends</span> <span class="cm">Persona</span> {
+    <span class="kw">private</span> String direccion;   <span class="co">// atributo encapsulado</span>
+
+    <span class="kw">public</span> <span class="cm">Dueno</span>(int id, String nombre, String dni,
+                 String telefono, String correo, String direccion) {
+        <span class="kw">super</span>(id, nombre, dni, telefono, correo); <span class="co">// llama al constructor padre</span>
+        <span class="kw">this</span>.direccion = direccion;
+    }
+
+    <span class="kw">public</span> String getDireccion() { <span class="kw">return</span> direccion; } <span class="co">// getter</span>
+    <span class="kw">public void</span> setDireccion(String d) { direccion = d; } <span class="co">// setter</span>
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 1:</strong> "Clases y objetos. Modificadores de acceso." — Cada clase tiene campos <code>private</code> y métodos <code>public</code> que representan el contrato de acceso al objeto.
+      </div>
+
+      <div class="silabo-ref" style="margin-top:10px;">
+        <strong>📂 Archivo:</strong> <code>src/vetcare/modelo/Dueno.java</code> — Clase completa implementada con campos <code>private</code>, getters/setters y constructor completo. Ver código fuente en el repositorio.
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.2 Sobrecarga -->
+  <div class="modulo-card">
+    <div class="modulo-header">
+      <h3>1.2 Sobrecarga de Constructores (Overloading)</h3>
+      <span class="archivo">modelo/ConsultaMedica.java</span>
+      <span class="unidad-badge">Semana 2</span>
+    </div>
+    <div class="modulo-body">
+      <p>La clase <code>ConsultaMedica</code> tiene <strong>3 constructores con diferente firma</strong>: uno sin observaciones, uno con observaciones y uno completo con todos los campos desde BD. Esto es sobrecarga porque el mismo nombre de método acepta distintos parámetros.</p>
+
+      <pre><span class="kw">public class</span> <span class="cm">ConsultaMedica</span> {
+
+    <span class="co">// Constructor 1: básico (diagnóstico + tratamiento)</span>
+    <span class="kw">public</span> <span class="cm">ConsultaMedica</span>(int idMascota, String diagnostico, String tratamiento) {
+        <span class="kw">this</span>(idMascota, diagnostico, tratamiento, <span class="st">""</span>);
+    }
+
+    <span class="co">// Constructor 2: con observaciones</span>
+    <span class="kw">public</span> <span class="cm">ConsultaMedica</span>(int idMascota, String diagnostico,
+                          String tratamiento, String observaciones) { ... }
+
+    <span class="co">// Constructor 3: reconstrucción desde BD (incluye id y fecha)</span>
+    <span class="kw">public</span> <span class="cm">ConsultaMedica</span>(int id, int idMascota, String fecha,
+                          String diagnostico, String tratamiento,
+                          String observaciones) { ... }
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 2:</strong> "Parámetros y métodos de sobrecarga." — El compilador elige el constructor correcto según el número y tipo de argumentos en cada llamada.
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.3 Static / Final -->
+  <div class="modulo-card">
+    <div class="modulo-header">
+      <h3>1.3 Variables y Métodos static · Constantes final</h3>
+      <span class="archivo">gestion/SistemaVetCare.java · gui/LoginFrame.java</span>
+      <span class="unidad-badge">Semana 2</span>
+    </div>
+    <div class="modulo-body">
+      <p>Las credenciales del administrador se declaran como <code>static final</code>: <code>static</code> porque pertenecen a la clase (no a cada instancia) y <code>final</code> porque su valor no cambia en tiempo de ejecución. Son constantes de clase.</p>
+
+      <pre><span class="kw">public class</span> <span class="cm">SistemaVetCare</span> {
+
+    <span class="co">// Constante de clase: compartida por TODAS las instancias, nunca cambia</span>
+    <span class="kw">private static final</span> String USUARIO_ADMIN = <span class="st">"admin"</span>;
+    <span class="kw">private static final</span> String CLAVE_ADMIN   = <span class="st">"vetcare2026"</span>;
+
+    <span class="co">// Colección de objetos gestionados por el sistema</span>
+    <span class="kw">private</span> List&lt;<span class="cm">Mascota</span>&gt;     mascotas     = <span class="kw">new</span> ArrayList&lt;&gt;();
+    <span class="kw">private</span> List&lt;<span class="cm">Dueno</span>&gt;       duenos       = <span class="kw">new</span> ArrayList&lt;&gt;();
+    <span class="kw">private</span> List&lt;<span class="cm">Veterinario</span>&gt; veterinarios = <span class="kw">new</span> ArrayList&lt;&gt;();
+    <span class="kw">private</span> List&lt;<span class="cm">Cita</span>&gt;        citas        = <span class="kw">new</span> ArrayList&lt;&gt;();
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 2:</strong> "Variables, métodos, clases estáticos." — <code>static final</code> define constantes; <code>ArrayList</code> implementa la interfaz <code>List</code> del framework de colecciones Java.
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.4 Colecciones -->
+  <div class="modulo-card">
+    <div class="modulo-header">
+      <h3>1.4 Colecciones y Control de Versiones (Git)</h3>
+      <span class="archivo">gestion/SistemaVetCare.java · GitHub</span>
+      <span class="unidad-badge">Semanas 1-3</span>
+    </div>
+    <div class="modulo-body">
+      <p>El sistema usa <strong>colecciones genéricas</strong> (<code>List&lt;T&gt;</code>, <code>ArrayList&lt;T&gt;</code>) para almacenar y recorrer objetos. El repositorio está en GitHub con historial de commits, ramas y mensajes convencionales (<code>feat:</code>, <code>fix:</code>).</p>
+
+      <pre><span class="co">// Búsqueda funcional con stream() — Java 8+</span>
+<span class="kw">public</span> <span class="cm">Mascota</span> buscarMascota(String nombre) {
+    <span class="kw">return</span> mascotas.stream()
+        .filter(m -> m.getAnimal().getNombre().equalsIgnoreCase(nombre))
+        .findFirst()
+        .orElse(<span class="kw">null</span>);
+}
+
+<span class="co">// Iteración con for-each</span>
+<span class="kw">for</span> (<span class="cm">Mascota</span> m : mascotas) {
+    System.out.println(m.getAnimal().getNombre());
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 2:</strong> "Colecciones." | <strong>Semana 1-2 PC:</strong> "Creación de repositorio, primer commit, git add, git commit, historial de commits, branches y merges."
+      </div>
+
+      <div class="silabo-ref" style="margin-top:10px;">
+        <strong>🔗 Repositorio:</strong> <code>github.com/webskechiza/Tecnicas-Programacion-OOP</code> — Branch <code>master</code> con historial de commits: init, estructura de paquetes, modelos, capa DB, GUI completa, fix tildes/ñ.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       UNIDAD II
+  ══════════════════════════════════════════════════════════ -->
+  <div class="section-title" style="border-radius:4px; margin-bottom:4px; font-size:18px; padding:12px 18px;">
+    📗 UNIDAD II — Clases y Relaciones entre Clases
+    <span style="font-size:13px; font-weight:normal;"> (Semanas 4 – 5)</span>
+  </div>
+  <div style="background:#EBF5FB; border:1px solid #AED6F1; padding:10px 18px; margin-bottom:20px; border-radius:0 0 4px 4px; font-size:13px;">
+    <strong>Logro:</strong> Desarrollar casos haciendo uso correcto de diagramas y buenas prácticas, demostrando creatividad y responsabilidad.
+  </div>
+
+  <!-- 2.1 Herencia -->
+  <div class="modulo-card" style="border-left-color:#1A5276;">
+    <div class="modulo-header" style="background:#EBF5FB;">
+      <h3>2.1 Herencia (Inheritance)</h3>
+      <span class="archivo">modelo/Animal.java → Perro / Gato / Ave.java</span>
+      <span class="semana-badge">Semana 4</span>
+    </div>
+    <div class="modulo-body">
+      <p>VetCare implementa <strong>dos jerarquías de herencia independientes</strong>:</p>
+      <ul>
+        <li><code>Animal</code> (abstracta) → <code>Perro</code>, <code>Gato</code>, <code>Ave</code></li>
+        <li><code>Persona</code> (abstracta) → <code>Dueno</code>, <code>Veterinario</code></li>
+      </ul>
+      <p>Las subclases heredan atributos comunes (<code>nombre</code>, <code>raza</code>, <code>edad</code> para Animal; <code>dni</code>, <code>telefono</code> para Persona) y cada una añade lo que le es propio.</p>
+
+      <pre><span class="co">// Superclase abstracta — define el contrato</span>
+<span class="kw">public abstract class</span> <span class="cm">Animal</span> {
+    <span class="kw">protected</span> String nombre, raza, sexo;
+    <span class="kw">protected</span> int    edad;
+    <span class="kw">protected</span> double peso;
+
+    <span class="kw">public abstract</span> String getEspecie(); <span class="co">// obliga a las subclases a implementarlo</span>
+}
+
+<span class="co">// Subclase Perro — hereda y especializa</span>
+<span class="kw">public class</span> <span class="cm">Perro</span> <span class="kw">extends</span> <span class="cm">Animal</span> {
+    <span class="kw">private</span> String tamano; <span class="co">// atributo propio de Perro</span>
+
+    <span class="an">@Override</span>
+    <span class="kw">public</span> String getEspecie() { <span class="kw">return</span> <span class="st">"Perro"</span>; }
+}
+
+<span class="co">// Subclase Gato — atributo propio distinto</span>
+<span class="kw">public class</span> <span class="cm">Gato</span> <span class="kw">extends</span> <span class="cm">Animal</span> {
+    <span class="kw">private</span> boolean castrado; <span class="co">// solo Gato tiene este campo</span>
+
+    <span class="an">@Override</span>
+    <span class="kw">public</span> String getEspecie() { <span class="kw">return</span> <span class="st">"Gato"</span>; }
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 4:</strong> "Herencia. Diagrama de clases y desarrollo de casos." — La herencia evita duplicar código: los 5 atributos comunes de Animal se escriben una sola vez y las tres subclases los obtienen automáticamente.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.2 Polimorfismo -->
+  <div class="modulo-card" style="border-left-color:#1A5276;">
+    <div class="modulo-header" style="background:#EBF5FB;">
+      <h3>2.2 Polimorfismo (Overriding)</h3>
+      <span class="archivo">modelo/Perro.java · Gato.java · Ave.java</span>
+      <span class="semana-badge">Semana 4</span>
+    </div>
+    <div class="modulo-body">
+      <p>El polimorfismo permite tratar objetos de distintas subclases de forma uniforme. Un mismo tipo de referencia <code>Animal</code> puede apuntar a un <code>Perro</code>, un <code>Gato</code> o un <code>Ave</code>, y el método <code>getEspecie()</code> retorna el valor correcto según el objeto real en memoria (ligadura dinámica).</p>
+
+      <pre><span class="cm">Animal</span> a1 = <span class="kw">new</span> <span class="cm">Perro</span>(<span class="st">"Rex"</span>, <span class="st">"Labrador"</span>, 3, <span class="st">"Macho"</span>, 25.5, <span class="st">"Grande"</span>);
+<span class="cm">Animal</span> a2 = <span class="kw">new</span> <span class="cm">Gato</span>(<span class="st">"Michi"</span>, <span class="st">"Siamés"</span>, 2, <span class="st">"Hembra"</span>, 4.2, <span class="kw">true</span>);
+<span class="cm">Animal</span> a3 = <span class="kw">new</span> <span class="cm">Ave</span>(<span class="st">"Pico"</span>, <span class="st">"Canario"</span>, 1, <span class="st">"Macho"</span>, 0.3, <span class="st">"Recto"</span>);
+
+<span class="cm">Animal</span>[] animales = {a1, a2, a3};
+<span class="kw">for</span> (<span class="cm">Animal</span> a : animales) {
+    System.out.println(a.getEspecie()); <span class="co">// → "Perro", "Gato", "Ave"</span>
+    <span class="co">// Java llama al método correcto en tiempo de EJECUCIÓN</span>
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 4:</strong> "Polimorfismo." — Mismo código (<code>a.getEspecie()</code>) produce resultados distintos según el tipo real del objeto. Esto permite que la GUI muestre el formulario correcto al registrar cada especie.
+      </div>
+
+      <div class="screenshot-box">
+        <strong>📷 Pestaña Mascotas — 7 animales registrados (Perro, Gato, Ave) con sus respectivos dueños</strong>
+        <img src="screenshots/02_mascotas.png" alt="Pestaña Mascotas con 7 animales">
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.3 Clases abstractas e interfaces -->
+  <div class="modulo-card" style="border-left-color:#1A5276;">
+    <div class="modulo-header" style="background:#EBF5FB;">
+      <h3>2.3 Clases Abstractas e Interfaces Genéricas</h3>
+      <span class="archivo">modelo/Animal.java · modelo/Persona.java · IGestionable.java</span>
+      <span class="semana-badge">Semana 4</span>
+    </div>
+    <div class="modulo-body">
+      <p>Una <strong>clase abstracta</strong> no puede instanciarse directamente; define estructura y comportamiento obligatorio para sus subclases. Una <strong>interfaz genérica</strong> define un contrato sin implementación, que puede ser adoptado por cualquier clase.</p>
+
+      <pre><span class="co">// Clase abstracta — no se puede crear new Animal()</span>
+<span class="kw">public abstract class</span> <span class="cm">Animal</span> {
+    <span class="kw">public abstract</span> String getEspecie(); <span class="co">// cada subclase DEBE implementar esto</span>
+}
+
+<span class="co">// Interfaz genérica — contrato de gestión CRUD</span>
+<span class="kw">public interface</span> <span class="iface">IGestionable</span>&lt;T&gt; {
+    <span class="kw">void</span>    agregar(T entidad);
+    <span class="kw">boolean</span> eliminar(int id);
+    T       buscar(int id);
+    List&lt;T&gt; listarTodos();
+}
+
+<span class="co">// SistemaVetCare implementa IGestionable para Mascota</span>
+<span class="kw">public class</span> <span class="cm">SistemaVetCare</span> <span class="kw">implements</span> <span class="iface">IGestionable</span>&lt;<span class="cm">Mascota</span>&gt; {
+    <span class="an">@Override</span>
+    <span class="kw">public void</span> agregar(<span class="cm">Mascota</span> m) { mascotas.add(m); }
+    ...
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 4:</strong> "Clases y métodos abstractos." — <code>Animal</code> y <code>Persona</code> son abstractas porque no tiene sentido crear un "Animal genérico" sin saber si es Perro, Gato o Ave. La interfaz <code>IGestionable&lt;T&gt;</code> garantiza que cualquier gestor ofrezca las 4 operaciones CRUD.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.4 Composición y Agregación -->
+  <div class="modulo-card" style="border-left-color:#1A5276;">
+    <div class="modulo-header" style="background:#EBF5FB;">
+      <h3>2.4 Composición y Agregación</h3>
+      <span class="archivo">modelo/Mascota.java · gestion/SistemaVetCare.java</span>
+      <span class="semana-badge">Semana 5</span>
+    </div>
+    <div class="modulo-body">
+      <p><strong>Composición</strong> (relación fuerte): <code>Mascota</code> contiene un <code>Animal</code> y un <code>Dueno</code>. Si la mascota se elimina, sus partes también dejan de tener sentido en ese contexto.</p>
+      <p><strong>Agregación</strong> (relación débil): <code>SistemaVetCare</code> tiene una lista de <code>Mascota</code>; los objetos pueden existir independientemente del sistema.</p>
+
+      <pre><span class="co">// Composición — Mascota ES una combinación de Animal + Dueno</span>
+<span class="kw">public class</span> <span class="cm">Mascota</span> {
+    <span class="kw">private final</span> <span class="cm">Animal</span> animal;  <span class="co">// compone un Animal</span>
+    <span class="kw">private final</span> <span class="cm">Dueno</span>  dueno;   <span class="co">// compone un Dueno</span>
+    <span class="kw">private</span> String observaciones;
+
+    <span class="kw">public</span> <span class="cm">Mascota</span>(<span class="cm">Animal</span> animal, <span class="cm">Dueno</span> dueno, String obs) {
+        <span class="kw">this</span>.animal = animal;
+        <span class="kw">this</span>.dueno  = dueno;
+        <span class="kw">this</span>.observaciones = obs;
+    }
+}
+
+<span class="co">// Agregación — SistemaVetCare TIENE mascotas (no las crea, las recibe)</span>
+<span class="kw">public class</span> <span class="cm">SistemaVetCare</span> {
+    <span class="kw">private</span> List&lt;<span class="cm">Mascota</span>&gt; mascotas = <span class="kw">new</span> ArrayList&lt;&gt;();
+}</pre>
+
+      <div style="margin-top:10px;">
+        <table>
+          <tr><th>Relación</th><th>Clases involucradas</th><th>Símbolo UML</th><th>¿Qué pasa si se elimina el contenedor?</th></tr>
+          <tr><td><strong>Composición</strong></td><td>Mascota ◆ Animal, Mascota ◆ Dueno</td><td>◆────</td><td>Las partes dejan de tener sentido</td></tr>
+          <tr><td><strong>Agregación</strong></td><td>SistemaVetCare ◇ Mascota</td><td>◇────</td><td>Los objetos siguen existiendo independientemente</td></tr>
+          <tr><td><strong>Herencia</strong></td><td>Animal → Perro/Gato/Ave</td><td>△────</td><td>La subclase hereda todo del padre</td></tr>
+        </table>
+      </div>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 5:</strong> "Relaciones entre clases: Agregación. Composición. Diagrama UML." — El diagrama UML del proyecto documenta estas tres relaciones entre las 12 clases de modelo.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.5 Enum -->
+  <div class="modulo-card" style="border-left-color:#1A5276;">
+    <div class="modulo-header" style="background:#EBF5FB;">
+      <h3>2.5 Tipos Enumerados (Enum)</h3>
+      <span class="archivo">modelo/Cita.java</span>
+      <span class="semana-badge">Semana 4</span>
+    </div>
+    <div class="modulo-body">
+      <p>La clase <code>Cita</code> usa un <strong>enum</strong> para representar el estado de la cita. Un enum es un tipo especial de clase con un conjunto fijo de valores posibles, lo que evita errores de tipeo y valores inválidos (es más seguro que usar un <code>String</code> libre).</p>
+
+      <pre><span class="kw">public class</span> <span class="cm">Cita</span> {
+
+    <span class="kw">public enum</span> <span class="cm">Estado</span> {
+        PENDIENTE, ATENDIDA, CANCELADA, NO_ASISTIO
+    }
+
+    <span class="kw">private</span> <span class="cm">Estado</span> estado;
+
+    <span class="kw">public</span> <span class="cm">Cita</span>(...) {
+        <span class="kw">this</span>.estado = <span class="cm">Estado</span>.PENDIENTE; <span class="co">// toda cita inicia PENDIENTE</span>
+    }
+
+    <span class="kw">public void</span> cancelar(String motivo) {
+        <span class="kw">this</span>.estado          = <span class="cm">Estado</span>.CANCELADA;
+        <span class="kw">this</span>.motivoCancelacion = motivo;
+    }
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 4:</strong> "Modificador final. Interfaz." — <code>enum</code> es una clase especial de Java que implementa internamente un conjunto de constantes <code>final static</code>.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       UNIDAD III
+  ══════════════════════════════════════════════════════════ -->
+  <div class="section-title" style="border-radius:4px; margin-bottom:4px; font-size:18px; padding:12px 18px;">
+    📕 UNIDAD III — Programación Visual y Acceso a Base de Datos
+    <span style="font-size:13px; font-weight:normal;"> (Semanas 6 – 7)</span>
+  </div>
+  <div style="background:#FEF9E7; border:1px solid #F9E79F; padding:10px 18px; margin-bottom:20px; border-radius:0 0 4px 4px; font-size:13px;">
+    <strong>Logro:</strong> Desarrollar aplicaciones de programación visual y con acceso a datos para almacenamiento de información, demostrando creatividad y buenas prácticas.
+  </div>
+
+  <!-- 3.1 Swing -->
+  <div class="modulo-card" style="border-left-color:#B7770D;">
+    <div class="modulo-header" style="background:#FEF9E7;">
+      <h3>3.1 Interfaz Gráfica con Swing — JFrame, JPanel, JTabbedPane</h3>
+      <span class="archivo">gui/MainFrame.java · gui/LoginFrame.java</span>
+      <span class="semana-badge" style="background:#FEF9E7; color:#B7770D; border-color:#F9E79F;">Semana 6</span>
+    </div>
+    <div class="modulo-body">
+      <p>La interfaz de VetCare está construida con <strong>Java Swing</strong>. La arquitectura de ventanas es:</p>
+      <ul>
+        <li><strong>LoginFrame</strong>: JFrame de 420×380 px con GridBagLayout para el formulario de acceso</li>
+        <li><strong>MainFrame</strong>: JFrame de 1050×680 px con JTabbedPane de 5 pestañas (Mascotas, Dueños, Veterinarios, Citas, Historial)</li>
+        <li>Cada pestaña es un <strong>JPanel personalizado</strong> con BorderLayout (barra top, tabla central, botones bottom)</li>
+      </ul>
+
+      <pre><span class="kw">public class</span> <span class="cm">MainFrame</span> <span class="kw">extends</span> <span class="cm">JFrame</span> {
+
+    <span class="co">// Constantes de color compartidas por todos los paneles</span>
+    <span class="kw">static final</span> Color VERDE     = <span class="kw">new</span> Color(0x14, 0x5A, 0x32);
+    <span class="kw">static final</span> Color AMBAR     = <span class="kw">new</span> Color(0xB7, 0x7A, 0x0C);
+
+    <span class="kw">private void</span> construirUI() {
+        <span class="cm">JTabbedPane</span> tabs = <span class="kw">new</span> <span class="cm">JTabbedPane</span>();
+        tabs.addTab(<span class="st">"Mascotas"</span>,     <span class="kw">new</span> <span class="cm">PanelMascotas</span>());
+        tabs.addTab(<span class="st">"Dueños"</span>,       <span class="kw">new</span> <span class="cm">PanelDuenos</span>());
+        tabs.addTab(<span class="st">"Veterinarios"</span>, <span class="kw">new</span> <span class="cm">PanelVeterinarios</span>());
+        tabs.addTab(<span class="st">"Citas"</span>,        <span class="kw">new</span> <span class="cm">PanelCitas</span>());
+        tabs.addTab(<span class="st">"Historial"</span>,    <span class="kw">new</span> <span class="cm">PanelHistorial</span>());
+    }
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 6:</strong> "Swing. Programación de componentes gráficos. Componentes del proyecto. Eventos." — Cada componente Swing extiende <code>JComponent</code>, que a su vez extiende <code>JComponent</code> → es un ejemplo de herencia de la biblioteca estándar de Java.
+      </div>
+
+      <div class="screenshot-box">
+        <strong>📷 Login — Inicio de sesión VetCare</strong>
+        <img src="screenshots/01_login.png" alt="Pantalla de login VetCare">
+      </div>
+
+      <div class="screenshot-box">
+        <strong>📷 MainFrame — Pestaña Mascotas (7 registros desde MySQL)</strong>
+        <img src="screenshots/02_mascotas.png" alt="Pestaña Mascotas con datos">
+      </div>
+    </div>
+  </div>
+
+  <!-- 3.2 JTable + DefaultTableModel -->
+  <div class="modulo-card" style="border-left-color:#B7770D;">
+    <div class="modulo-header" style="background:#FEF9E7;">
+      <h3>3.2 Tablas y Modelos de Datos — JTable · DefaultTableModel</h3>
+      <span class="archivo">gui/PanelDuenos.java · PanelMascotas.java · PanelCitas.java</span>
+      <span class="semana-badge" style="background:#FEF9E7; color:#B7770D; border-color:#F9E79F;">Semana 6</span>
+    </div>
+    <div class="modulo-body">
+      <p>Cada panel usa un <code>JTable</code> respaldado por un <code>DefaultTableModel</code>. El modelo separa los <em>datos</em> de la <em>vista</em> (patrón MVC): cuando los datos cambian, la tabla se actualiza automáticamente.</p>
+
+      <pre><span class="co">// Definición del modelo — columnas fijas, filas dinámicas</span>
+<span class="kw">private</span> <span class="cm">DefaultTableModel</span> modelo;
+
+<span class="kw">private void</span> construirUI() {
+    modelo = <span class="kw">new</span> <span class="cm">DefaultTableModel</span>(
+        <span class="kw">new</span> String[]{<span class="st">"ID"</span>, <span class="st">"Nombre"</span>, <span class="st">"DNI"</span>, <span class="st">"Teléfono"</span>, <span class="st">"Correo"</span>, <span class="st">"Dirección"</span>}, 0
+    ) {
+        <span class="an">@Override</span>
+        <span class="kw">public boolean</span> isCellEditable(int r, int c) { <span class="kw">return false</span>; } <span class="co">// solo lectura</span>
+    };
+    tabla = <span class="kw">new</span> <span class="cm">JTable</span>(modelo);
+}
+
+<span class="co">// Carga de datos desde BD → tabla</span>
+<span class="kw">private void</span> cargarTabla() {
+    modelo.setRowCount(0); <span class="co">// limpia filas anteriores</span>
+    <span class="kw">for</span> (<span class="cm">Dueno</span> d : <span class="cm">DuenoDB</span>.listar())
+        modelo.addRow(<span class="kw">new</span> Object[]{d.getId(), d.getNombre(), ...});
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 6:</strong> "Programación de componentes gráficos." — <code>JTable</code> + <code>DefaultTableModel</code> implementa el patrón Modelo-Vista-Controlador: el modelo contiene los datos, la tabla solo los muestra.
+      </div>
+
+      <div class="screenshot-box">
+        <strong>📷 Pestaña Dueños — 5 dueños cargados desde MySQL via JTable + DefaultTableModel</strong>
+        <img src="screenshots/03_duenos.png" alt="Pestaña Dueños con datos">
+      </div>
+
+      <div class="screenshot-box">
+        <strong>📷 Pestaña Veterinarios — 5 veterinarios con especialidad y colegiatura</strong>
+        <img src="screenshots/04_veterinarios.png" alt="Pestaña Veterinarios con datos">
+      </div>
+    </div>
+  </div>
+
+  <!-- 3.3 Eventos ActionListener -->
+  <div class="modulo-card" style="border-left-color:#B7770D;">
+    <div class="modulo-header" style="background:#FEF9E7;">
+      <h3>3.3 Programación por Eventos — ActionListener</h3>
+      <span class="archivo">gui/PanelMascotas.java · gui/PanelCitas.java</span>
+      <span class="semana-badge" style="background:#FEF9E7; color:#B7770D; border-color:#F9E79F;">Semana 6</span>
+    </div>
+    <div class="modulo-body">
+      <p>Swing es orientado a eventos: cada botón, campo o combo tiene un <strong>listener</strong> (observador) que se ejecuta cuando el usuario interactúa. VetCare usa <strong>expresiones lambda</strong> (Java 8) para registrar los eventos de forma compacta.</p>
+
+      <pre><span class="co">// Lambda como ActionListener — equivale a una clase anónima</span>
+btnNuevo.addActionListener(e -> abrirFormulario());    <span class="co">// clic → abre diálogo</span>
+btnEliminar.addActionListener(e -> eliminar());         <span class="co">// clic → elimina fila</span>
+btnRef.addActionListener(e -> cargarTabla());           <span class="co">// clic → recarga desde BD</span>
+
+<span class="co">// Evento dinámico en ComboBox — cambia el label según la especie</span>
+cbEspecie.addActionListener(e -> {
+    String esp = (String) cbEspecie.getSelectedItem();
+    <span class="kw">if</span> (<span class="st">"Perro"</span>.equals(esp))
+        lblExtra.setText(<span class="st">"Tamaño (Pequeño/Mediano/Grande):"</span>);
+    <span class="kw">else if</span> (<span class="st">"Gato"</span>.equals(esp))
+        lblExtra.setText(<span class="st">"Castrado? (true/false):"</span>);
+    <span class="kw">else</span>
+        lblExtra.setText(<span class="st">"Tipo de pico (Curvo/Recto/Ganchudo):"</span>);
+});</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 6:</strong> "Eventos." — El polimorfismo de la Unidad II se combina aquí con los eventos: el formulario cambia dinámicamente (polimorfismo en tiempo de ejecución) según la especie seleccionada por el usuario.
+      </div>
+    </div>
+  </div>
+
+  <!-- 3.4 JDBC -->
+  <div class="modulo-card" style="border-left-color:#B7770D;">
+    <div class="modulo-header" style="background:#FEF9E7;">
+      <h3>3.4 Conectividad con MySQL — JDBC · Patrón Singleton</h3>
+      <span class="archivo">db/ConexionDB.java</span>
+      <span class="semana-badge" style="background:#FEF9E7; color:#B7770D; border-color:#F9E79F;">Semana 7</span>
+    </div>
+    <div class="modulo-body">
+      <p><code>ConexionDB</code> implementa el <strong>patrón Singleton</strong>: garantiza que solo exista una conexión a MySQL en toda la aplicación. Usa <code>DriverManager.getConnection()</code> del API JDBC para conectar al servidor.</p>
+
+      <pre><span class="kw">public class</span> <span class="cm">ConexionDB</span> {
+
+    <span class="kw">private static final</span> String URL    = <span class="st">"jdbc:mysql://localhost:3306/vetcare_db"</span>
+                                         + <span class="st">"?useSSL=false&amp;serverTimezone=UTC"</span>;
+    <span class="kw">private static final</span> String USUARIO = <span class="st">"root"</span>;
+    <span class="kw">private static final</span> String CLAVE   = <span class="st">"vetcare2026"</span>;
+
+    <span class="kw">private static</span> <span class="cm">Connection</span> instancia; <span class="co">// única instancia en memoria</span>
+
+    <span class="kw">public static</span> <span class="cm">Connection</span> getConexion() <span class="kw">throws</span> <span class="cm">SQLException</span> {
+        <span class="kw">if</span> (instancia == <span class="kw">null</span> || instancia.isClosed()) {
+            <span class="co">// Solo se conecta si no existe conexión activa</span>
+            instancia = <span class="cm">DriverManager</span>.getConnection(URL, USUARIO, CLAVE);
+        }
+        <span class="kw">return</span> instancia;
+    }
+}</pre>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 7:</strong> "JDBC: Java DataBase Connectivity. Conectividad JDBC. Conectando con SQL." — <code>DriverManager</code> es el puente entre Java y MySQL; la URL JDBC especifica el protocolo, host, puerto y nombre de la base de datos.
+      </div>
+
+      <div class="screenshot-box">
+        <strong>📷 Pestaña Citas — 6 citas con estados ATENDIDA, CANCELADA, NO_ASISTIO y PENDIENTE</strong>
+        <img src="screenshots/05_citas.png" alt="Pestaña Citas con datos y estados">
+      </div>
+    </div>
+  </div>
+
+  <!-- 3.5 DAO y CRUD -->
+  <div class="modulo-card" style="border-left-color:#B7770D;">
+    <div class="modulo-header" style="background:#FEF9E7;">
+      <h3>3.5 Operaciones CRUD — PreparedStatement · Patrón DAO</h3>
+      <span class="archivo">db/DuenoDB.java · MascotaDB.java · CitaDB.java · ConsultaDB.java</span>
+      <span class="semana-badge" style="background:#FEF9E7; color:#B7770D; border-color:#F9E79F;">Semana 7</span>
+    </div>
+    <div class="modulo-body">
+      <p>Cada entidad tiene su propia clase <strong>DAO (Data Access Object)</strong> con los 4 métodos CRUD. Se usan <code>PreparedStatement</code> (consultas parametrizadas) en lugar de concatenar SQL, lo que evita <strong>inyección SQL</strong>.</p>
+
+      <pre><span class="kw">public class</span> <span class="cm">DuenoDB</span> {
+
+    <span class="co">// CREATE — inserta un nuevo dueño</span>
+    <span class="kw">public static void</span> insertar(<span class="cm">Dueno</span> d) <span class="kw">throws</span> <span class="cm">SQLException</span> {
+        String sql = <span class="st">"INSERT INTO duenos(nombre,dni,telefono,correo,direccion)"</span>
+                   + <span class="st">" VALUES(?,?,?,?,?)"</span>;                    <span class="co">// ← parámetros seguros</span>
+        <span class="kw">try</span> (<span class="cm">PreparedStatement</span> ps = <span class="cm">ConexionDB</span>.getConexion().prepareStatement(sql)) {
+            ps.setString(1, d.getNombre());
+            ps.setString(2, d.getDni());
+            ps.executeUpdate();
+        }
+    }
+
+    <span class="co">// READ — devuelve lista de dueños</span>
+    <span class="kw">public static</span> List&lt;<span class="cm">Dueno</span>&gt; listar() <span class="kw">throws</span> <span class="cm">SQLException</span> {
+        List&lt;<span class="cm">Dueno</span>&gt; lista = <span class="kw">new</span> ArrayList&lt;&gt;();
+        <span class="kw">try</span> (<span class="cm">ResultSet</span> rs = <span class="cm">ConexionDB</span>.getConexion()
+                .createStatement().executeQuery(<span class="st">"SELECT * FROM duenos"</span>)) {
+            <span class="kw">while</span> (rs.next())
+                lista.add(<span class="kw">new</span> <span class="cm">Dueno</span>(rs.getInt(<span class="st">"id"</span>), rs.getString(<span class="st">"nombre"</span>), ...));
+        }
+        <span class="kw">return</span> lista;
+    }
+
+    <span class="co">// DELETE — elimina por ID</span>
+    <span class="kw">public static void</span> eliminar(<span class="kw">int</span> id) <span class="kw">throws</span> <span class="cm">SQLException</span> {
+        <span class="kw">try</span> (<span class="cm">PreparedStatement</span> ps = <span class="cm">ConexionDB</span>.getConexion()
+                .prepareStatement(<span class="st">"DELETE FROM duenos WHERE id=?"</span>)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }
+    }
+}</pre>
+
+      <div style="margin-top:10px;">
+        <table>
+          <tr><th>Clase DAO</th><th>Tabla MySQL</th><th>Operaciones</th></tr>
+          <tr><td>DuenoDB</td><td>duenos</td><td>listar, insertar, eliminar, existeDni, buscarPorDni</td></tr>
+          <tr><td>VeterinarioDB</td><td>veterinarios</td><td>listar, insertar, actualizarActivo, eliminar, buscarPorId</td></tr>
+          <tr><td>MascotaDB</td><td>mascotas (JOIN duenos)</td><td>listar, insertar, eliminar</td></tr>
+          <tr><td>CitaDB</td><td>citas (JOIN mascotas, veterinarios)</td><td>listarFilas, insertar, actualizarEstado, eliminar, hayConflicto</td></tr>
+          <tr><td>ConsultaDB</td><td>consultas</td><td>listarPorMascota, insertar, eliminar</td></tr>
+        </table>
+      </div>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 7:</strong> "JDBC: Puente JDBC-ODBC. Consultas SQL. Manipulación de Base de Datos. CRUD a tablas." — <code>PreparedStatement</code> compila la consulta SQL una vez y la ejecuta con distintos valores, siendo más eficiente y seguro que <code>Statement</code>.
+      </div>
+
+      <div class="screenshot-box">
+        <strong>📷 Pestaña Historial — Consulta médica de "Max (Perro)" recuperada desde consultas_medicas</strong>
+        <img src="screenshots/06_historial.png" alt="Pestaña Historial con consulta médica">
+      </div>
+    </div>
+  </div>
+
+  <!-- 3.6 Base de datos -->
+  <div class="modulo-card" style="border-left-color:#B7770D;">
+    <div class="modulo-header" style="background:#FEF9E7;">
+      <h3>3.6 Diseño de Base de Datos Relacional</h3>
+      <span class="archivo">Desarrollo/vetcare_db.sql</span>
+      <span class="semana-badge" style="background:#FEF9E7; color:#B7770D; border-color:#F9E79F;">Semana 7</span>
+    </div>
+    <div class="modulo-body">
+      <p>La base de datos <code>vetcare_db</code> tiene 5 tablas relacionadas mediante claves foráneas. Se usa charset <code>utf8mb4</code> para soportar tildes y caracteres especiales.</p>
+
+      <div class="diagrama">
+<span class="cls">duenos</span>      (id PK, nombre, dni UNIQUE, telefono, correo, direccion)
+    <span class="arrow">│ 1</span>
+    <span class="arrow">│ ∞</span>
+<span class="cls">mascotas</span>    (id PK, especie, nombre, raza, edad, sexo, peso, dni_dueno FK, obs, atributo_extra)
+    <span class="arrow">│ 1</span>      <span class="arrow">│ 1</span>
+    <span class="arrow">│ ∞</span>      <span class="arrow">│ ∞</span>
+<span class="cls">citas</span>       (id PK, id_mascota FK, id_veterinario FK, fecha, hora, motivo, estado, motivo_cancelacion)
+    <span class="arrow">│ 1</span>
+    <span class="arrow">│ ∞</span>
+<span class="cls">consultas</span>   (id PK, id_mascota FK, fecha, diagnostico, tratamiento, observaciones)
+
+<span class="cls">veterinarios</span> (id PK, nombre, dni UNIQUE, telefono, correo, especialidad, colegiatura, activo)
+      </div>
+
+      <div class="silabo-ref">
+        <strong>Sílabo Semana 7:</strong> "JDBC: Base de Datos. Conectividad JDBC. Conectando con SQL." — Las FK garantizan integridad referencial: no se puede registrar una cita para una mascota inexistente. MySQL se ejecuta en Docker (contenedor <code>vetcare-mysql</code>).
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESUMEN GLOBAL ── -->
+  <div class="section">
+    <div class="section-title">4. Tabla Resumen — Concepto del Sílabo vs. Implementación en VetCare</div>
+    <div class="section-body">
+      <table>
+        <tr>
+          <th>Unidad</th><th>Semana</th><th>Concepto del Sílabo</th><th>Dónde está en VetCare</th><th>Cómo se aplica</th>
+        </tr>
+        <tr><td rowspan="5"><strong>I</strong></td><td>1</td><td>Clases y objetos, modificadores</td><td>Dueno, Veterinario, Mascota, Cita</td><td>campos <code>private</code> + getters/setters</td></tr>
+        <tr><td>2</td><td>Sobrecarga de métodos</td><td>ConsultaMedica</td><td>3 constructores con distinta firma</td></tr>
+        <tr><td>2</td><td>static final, variables estáticas</td><td>SistemaVetCare, LoginFrame</td><td>USUARIO_ADMIN, CLAVE_ADMIN, constantes de color</td></tr>
+        <tr><td>2</td><td>Colecciones (List, ArrayList)</td><td>SistemaVetCare</td><td>List&lt;Mascota&gt;, List&lt;Cita&gt;, stream().filter()</td></tr>
+        <tr><td>1-3</td><td>Control de versiones (Git)</td><td>Repositorio GitHub</td><td>commits feat/fix, ramas, historial</td></tr>
+        <tr><td rowspan="4"><strong>II</strong></td><td>4</td><td>Herencia</td><td>Animal→Perro/Gato/Ave, Persona→Dueno/Vet.</td><td>extends, super(), atributos heredados</td></tr>
+        <tr><td>4</td><td>Polimorfismo</td><td>getEspecie() en Perro, Gato, Ave</td><td>@Override, ligadura dinámica</td></tr>
+        <tr><td>4</td><td>Clases abstractas, interfaces</td><td>Animal (abstract), IGestionable&lt;T&gt;</td><td>abstract class, implements, generics</td></tr>
+        <tr><td>5</td><td>Composición y Agregación</td><td>Mascota ◆ Animal + Dueno</td><td>campo Animal final dentro de Mascota</td></tr>
+        <tr><td rowspan="5"><strong>III</strong></td><td>6</td><td>Swing — JFrame, JPanel</td><td>LoginFrame, MainFrame</td><td>extends JFrame, BorderLayout, header/footer</td></tr>
+        <tr><td>6</td><td>Componentes gráficos</td><td>JTable, JComboBox, JButton, JScrollPane</td><td>DefaultTableModel, ActionListener lambda</td></tr>
+        <tr><td>6</td><td>Eventos</td><td>Todos los botones y combos</td><td>addActionListener(e → método())</td></tr>
+        <tr><td>7</td><td>JDBC, conexión SQL</td><td>ConexionDB (Singleton)</td><td>DriverManager.getConnection(url, user, pass)</td></tr>
+        <tr><td>7</td><td>CRUD a tablas</td><td>DuenoDB, VeterinarioDB, MascotaDB, CitaDB, ConsultaDB</td><td>PreparedStatement INSERT/SELECT/UPDATE/DELETE</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── ARQUITECTURA ── -->
+  <div class="section">
+    <div class="section-title">5. Arquitectura General del Sistema</div>
+    <div class="section-body">
+      <p>VetCare sigue una arquitectura en <strong>3 capas</strong>, patrón estándar en aplicaciones de escritorio Java:</p>
+      <br>
+      <table>
+        <tr><th>Capa</th><th>Paquete</th><th>Responsabilidad</th><th>Tecnología</th></tr>
+        <tr><td><strong>Presentación</strong></td><td>vetcare.gui</td><td>Mostrar datos, recibir entrada del usuario</td><td>Java Swing</td></tr>
+        <tr><td><strong>Lógica / Modelo</strong></td><td>vetcare.modelo, vetcare.gestion</td><td>Reglas de negocio, entidades del dominio</td><td>Java POO</td></tr>
+        <tr><td><strong>Datos</strong></td><td>vetcare.db</td><td>Leer y escribir en MySQL</td><td>JDBC + MySQL 8.0</td></tr>
+      </table>
+      <br>
+      <p>La GUI llama directamente a las clases DAO (simplificando la arquitectura para el alcance del proyecto). <code>ConexionDB</code> actúa como puerta de entrada única a la base de datos, implementando el patrón Singleton.</p>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- ═══════════════════════════════════════════════ FOOTER -->
+<div class="footer">
+  VetCare — Técnicas de Programación OO · UPN 2026 · Kevin Chirinos Zapata N00521954 · 24/06/2026
+</div>
+
+</body>
+</html>
