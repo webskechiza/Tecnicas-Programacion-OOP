@@ -3,8 +3,6 @@
 data/
 *.rar
 *.class
-# Version completa del sistema (solo local, no va al repo)
-Proyecto 2026/Vetcare/Desarrollo/
 # Notas de sesion de trabajo (uso personal)
 Proyecto 2026/SESION_*.md
 src/Commits.png
