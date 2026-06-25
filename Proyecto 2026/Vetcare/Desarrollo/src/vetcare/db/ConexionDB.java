@@ -10,7 +10,7 @@ public class ConexionDB {
         "jdbc:mysql://localhost:3306/vetcare_db" +
         "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String USUARIO = "root";
-    private static final String CLAVE   = "";          // cambia si tu MySQL tiene contrasena
+    private static final String CLAVE   = "vetcare2026"; // contrasena del contenedor Docker
 
     private static Connection conexion;
 
